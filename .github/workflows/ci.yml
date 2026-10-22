@@ -41,14 +41,17 @@ jobs:
     needs: run_tests
 #    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [tasks-api, title-normalizer]
+
     environment:
       name: github-pages
       url: ${{steps.deployment.outputs.page_url}}
     permissions:
       pages: write #  the default is none so we can't deploy with default
       id-token: write
-      matrix:
-        service: [tasks-api, title-normalizer]
     steps:
     - uses: actions/download-artifact@v7
       with:
