@@ -4,7 +4,7 @@ name: Test and Scan
 on:
   push:
     branches:
-      - branch
+      - branch2
   pull_request:
     branches:
       - main
@@ -55,9 +55,12 @@ jobs:
         path: _site
     - uses: actions/download-artifact@v7
       with:
-        name: title-normaliser-3.12-bandit-report
+        name: title-normalizer-3.12-bandit-report
         path: _site  
     - run: mv _site/tasks-api-3.12-bandit-report.html _site/index.html
+    - uses: actions/upload-pages-artifact@v5
+
+    - run: mv _site/title-normalizer-3.12-bandit-report.html _site/index.html
     - uses: actions/upload-pages-artifact@v5
       with:
         path: _site/
