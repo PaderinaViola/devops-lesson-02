@@ -1,3 +1,5 @@
+name: Test and Scan
+
 on:
   push:
     branches:
@@ -36,6 +38,27 @@ jobs:
         with:
           name: ${{matrix.service}}-${{matrix.python-version}}-bandit-report
           path: ${{matrix.service}}-${{matrix.python-version}}-bandit-report.html
+
+  deploy:
+    needs: run_tests
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{steps.deployment.outputs.page_url}}
+    permissions:
+      pages: write #the default is none so we can't deploy with default
+      id-token: write
+    steps:
+    - uses: actions/download-artifact@v7
+      with:
+        name: tasks-api-3.12-bandit-report
+        path: _site
+    - run: ls _site
+    - uses: actions/upload-pages-artifact@v5
+      with:
+        path: _site/
+    - uses: actions/deploy-pages@v5 # outputs page_url
+      id: deployment
 
   #matric to run multiple services wothout writing the separate code blocks for each
   #basically matrixes are for multiple jobs
