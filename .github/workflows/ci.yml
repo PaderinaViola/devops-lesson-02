@@ -66,6 +66,20 @@ jobs:
         path: _site/
     - uses: actions/deploy-pages@v5
       id: deployment
+
+  build_images:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [tasks-api, title-normalizer] # ${{matrix.service}}
+    steps:
+      - uses: actions/checkout@v7
+      - run: docker build ${{matrix.service}} -t services/${{matrix.service}}
+
+
+
+
       
 
   #matric to run multiple services wothout writing the separate code blocks for each
