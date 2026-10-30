@@ -75,7 +75,7 @@ jobs:
         service: [tasks-api, title-normalizer] # ${{matrix.service}}
     steps:
       - uses: actions/checkout@v7
-      - run: docker build ${{matrix.service}} -t services/${{matrix.service}}
+      - run: docker build -t ${{matrix.service}} services/${{matrix.service}}
 
 
 
