@@ -10,3 +10,17 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 3  
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: "Dockerfile"
+    directories: ["/services/tasks-api", "/services/title-normalizer"]
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "python"  
+      update-type: ["version-update:semver-major", "version-update:semver-minor"]
+    open-pull-requests-limit: 3  
+    groups:
+      actions:
+        patterns: ["python"]
